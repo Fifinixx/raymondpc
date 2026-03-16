@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { AddProductService } from "../../services/admin/admin-product.service.js";
+import { AdminAddProductService } from "../../services/admin/admin-product.service.js";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryImageUploadService } from "../../services/cloudinary/cloudinary.service.js";
 import fs from "fs/promises";
@@ -38,7 +38,6 @@ export async function AddProduct(
         );
     }
 
-    console.log("Cloudinary uploads", cloudinaryUploads);
     const formedProduct = {
       title,
       msrp,
@@ -48,7 +47,7 @@ export async function AddProduct(
       images: cloudinaryUploads.map((images) => images.publicId),
     };
     //add product to db
-    await AddProductService({ product: formedProduct, email });
+    await AdminAddProductService({ product: formedProduct, email });
     return res
       .status(200)
       .json({ message: "Product has been added succesfully" });
@@ -70,6 +69,6 @@ export async function AddProduct(
     );
 
     console.error("Error while adding product", e);
-    return res.status(500).json({ message: "Server error. Please try again." });
+    return res.status(500).json({ error: "Server error. Please try again." });
   }
 }

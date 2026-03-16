@@ -43,6 +43,16 @@ interface SidebarItemsGroupType {
   }[];
 }
 
+interface CategoryType {
+  id:string
+  name: string;
+  parentId?:string | null
+  isDeleted?:boolean
+  children?: CategoryType[] | null;
+  collapsed: boolean;
+}
 
 
-export type { UserType, ProductThumbType, SidebarItemsGroupType, ProductType };
+
+
+export type { UserType, ProductThumbType, SidebarItemsGroupType, ProductType, CategoryType };

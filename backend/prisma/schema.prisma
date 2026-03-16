@@ -107,12 +107,22 @@ model ProductImage {
 }
 
 model Category {
-  id       String    @id @default(uuid())
-  name     String
-  slug     String    @unique
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean @default(false)
+  collapsed Boolean? @default(true)
+
+  // self relation
+  parentId String?
+  parent   Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryToCategory")
+
+
   products Product[]
 }
-
 
 model Order {
   id                String   @id @default(uuid())

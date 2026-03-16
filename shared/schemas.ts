@@ -61,7 +61,7 @@ const productSchema = z.object({
     .nonnegative({ message: "Stock cannot be negative" }),
   variant: z.string().optional(),
   images: z
-    // 1. Allow an array where items can be EITHER a string OR a File object
+    //  Allow an array where items can be EITHER a string OR a File object
     .array(z.union([z.string(), z.instanceof(File)]))
 
     // Refine needs to check both types now to ensure at least one valid item exists
@@ -79,7 +79,18 @@ const productSchema = z.object({
     .max(5, { message: "You can upload up to 5 images" }),
 });
 
-export { userSchema, signInSchema, productSchema };
+export const CategorySchema: z.ZodType<{
+  name: string;
+  sub?: any;
+}> = z.lazy(() =>
+  z.object({
+    name: z.string().min(2, "Name should be atleast 2 characters long"),
+    sub: z.array(CategorySchema).nullable().optional(),
+  })
+);
+
+export const CategoriesSchema = z.array(CategorySchema)
+export { userSchema, signInSchema, productSchema};
 
 export type ProductType = z.infer<typeof productSchema>;
 export type UserType = z.infer<typeof userSchema>;

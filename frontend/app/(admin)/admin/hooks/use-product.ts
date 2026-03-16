@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { productSchema } from "../../shared/schemas";
+import { productSchema } from "../../../../../shared/schemas";
 import type { ProductType } from "@/lib/types";
-import { addProduct } from "@/lib/services/product.service";
+import { addProduct } from "@/app/(admin)/services/product.service";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export function useProductForm() {
   const emptyProduct: ProductType = {
     title: "",

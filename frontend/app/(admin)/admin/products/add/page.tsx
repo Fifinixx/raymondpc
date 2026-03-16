@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import Tiptap from "./_components/TipTap";
 import ImageUpload from "./_components/image-upload";
-import { useProductForm } from "@/hooks/use-product";
+import { useProductForm } from "@/app/(admin)/admin/hooks/use-product";
 import { Spinner } from "@/components/ui/spinner";
 
 export default function AddProduct() {

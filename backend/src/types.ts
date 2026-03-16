@@ -15,4 +15,12 @@ interface UserType {
   password: string;
 }
 
-export type {ProductType, UserType}
+interface CategoryType {
+  id?: string;
+  name: string;
+  slug:string;
+  isDeleted:boolean;
+  children?: CategoryType[] | null;
+}
+
+export type {ProductType, UserType, CategoryType}

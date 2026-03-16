@@ -3,7 +3,7 @@ import { ProductType, UserType } from "../../types.js";
 import { slugify } from "../../lib/utils.js";
 import { Prisma } from "../../generated/prisma/browser.js";
 
-export async function AddProductService({
+export async function AdminAddProductService({
   product,
   email,
 }: {

@@ -10,6 +10,7 @@ import {
   Logs,
   LayoutDashboardIcon,
   ChevronRight,
+  ListPlus,
 } from "lucide-react";
 
 import {
@@ -35,55 +36,59 @@ import {
 
 import { SidebarItemsGroupType } from "@/lib/types";
 const menus: SidebarItemsGroupType[] = [
-    {
-      group: "Products",
-      items: [
-        {
-          title: "Manage Products",
-          link: "/",
-          icon: Package,
-          subitems: [
-            { title: "Add", link: "admin/products/add" },
-            { title: "Edit", link: "admin/products/edit" },
-            { title: "Delete", link: "admin/products/delete" },
-          ],
-        },
-        {
-          title: "Product Reports",
-          link: "/product/reports",
-          icon: Notebook,
-        },
-        {
-          title: "Product Logs",
-          link: "/product/logs",
-          icon: Logs,
-        },
-      ],
-    },
-    {
-      group: "User management",
-      items: [
-        {
-          title: "Users",
-          link: "/users",
-          icon: UserRoundCog,
-          subitems: [
-            { title: "Add", link: "/users/add" },
-            { title: "Edit", link: "/users/edit" },
-            { title: "Delete", link: "/users/delete" },
-          ],
-        },
-        {
-            title:"User Logs",
-            link:"/users/logs",
-            icon:Logs
-        }
-      ],
-    },
-  ] ;
+  {
+    group: "Products",
+    items: [
+      {
+        title: "Manage Products",
+        link: "/",
+        icon: Package,
+        subitems: [
+          { title: "Add", link: "admin/products/add" },
+          { title: "Edit", link: "admin/products/edit" },
+          { title: "Delete", link: "admin/products/delete" },
+        ],
+      },
+      {
+        title: "Categories",
+        link: "/admin//categories",
+        icon: ListPlus,
+      },
+      {
+        title: "Product Reports",
+        link: "/admin/products/reports",
+        icon: Notebook,
+      },
+      {
+        title: "Product Logs",
+        link: "/product/logs",
+        icon: Logs,
+      },
+    ],
+  },
+  {
+    group: "User management",
+    items: [
+      {
+        title: "Users",
+        link: "/users",
+        icon: UserRoundCog,
+        subitems: [
+          { title: "Add", link: "/users/add" },
+          { title: "Edit", link: "/users/edit" },
+          { title: "Delete", link: "/users/delete" },
+        ],
+      },
+      {
+        title: "User Logs",
+        link: "/users/logs",
+        icon: Logs,
+      },
+    ],
+  },
+];
 
 export function AppSidebar() {
-
   return (
     <>
       <Sidebar collapsible="icon">
@@ -128,27 +133,31 @@ export function AppSidebar() {
                           <CollapsibleTrigger asChild>
                             <SidebarMenuButton tooltip={item.title}>
                               {item.icon && <item.icon />}
-                              <span>{item.title}</span>
+                              <Link href={item.link}>
+                                <span>{item.title}</span>
+                              </Link>
                               {item?.subitems && (
                                 <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                               )}
                             </SidebarMenuButton>
                           </CollapsibleTrigger>
-                          <CollapsibleContent>
-                            <SidebarMenuSub>
-                              {item.subitems?.map((item) => {
-                                return (
-                                  <SidebarMenuSubItem key={item.title}>
-                                    <SidebarMenuSubButton asChild>
-                                      <Link href={item.link}>
-                                        <span>{item.title}</span>
-                                      </Link>
-                                    </SidebarMenuSubButton>
-                                  </SidebarMenuSubItem>
-                                );
-                              })}
-                            </SidebarMenuSub>
-                          </CollapsibleContent>
+                          {item.subitems && (
+                            <CollapsibleContent>
+                              <SidebarMenuSub>
+                                {item.subitems?.map((item) => {
+                                  return (
+                                    <SidebarMenuSubItem key={item.title}>
+                                      <SidebarMenuSubButton asChild>
+                                        <Link href={item.link}>
+                                          <span>{item.title}</span>
+                                        </Link>
+                                      </SidebarMenuSubButton>
+                                    </SidebarMenuSubItem>
+                                  );
+                                })}
+                              </SidebarMenuSub>
+                            </CollapsibleContent>
+                          )}
                         </SidebarMenuItem>
                       </Collapsible>
                     );

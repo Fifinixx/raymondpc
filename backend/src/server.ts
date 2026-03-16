@@ -11,8 +11,7 @@ dotenv.config();
 import { authRouter } from "./routes/auth/auth.route.js";
 import { validateTokenRouter } from "./routes/auth/validate-token.route.js";
 import validateToken from "./middlewares/token/validateToken.js";
-import { AdminProductRouter } from "./routes/admin/admin-product.route.js";
-
+import { AdminRouter } from "./routes/admin/admin.route.js";
 
 const app = express();
 
@@ -21,7 +20,7 @@ app.use(cors({ origin: process.env.BASE_URL, credentials: true }));
 app.use(express.json());
 
 // products
-app.use("/api/products", () => {} )
+app.use("/api/products", () => {});
 
 //validate token
 app.use("/api/me", validateToken, (req, res) => {
@@ -31,9 +30,20 @@ app.use("/api/me", validateToken, (req, res) => {
 //Signin and Registration
 app.use("/api/auth", authRouter);
 
-//Admin routes
-app.use("/api/admin", validateToken, AdminProductRouter);
 
+app.use(
+  "/api/admin",
+  validateToken,
+  (req, res, next) => {
+    if (req.user.role !== "ADMIN") {
+      return res
+        .status(409)
+        .json({ message: "You do not have permission to access this route." });
+    }
+    next();
+  },
+  AdminRouter,
+);
 
 app.use((req, res) => {
   res.status(404).json({
